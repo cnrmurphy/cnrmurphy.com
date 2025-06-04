@@ -91,7 +91,7 @@ func main() {
 
 	ln, err := net.Listen("tcp", ":2001")
 	if err != nil {
-		log.Fatal().Err(err).Msg("failed to listen on :20001")
+		log.Fatal().Err(err).Msg("failed to listen on :2001")
 	}
 
 	log.Info().Msg("TCP server running on :2001")
