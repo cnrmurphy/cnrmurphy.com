@@ -3,10 +3,13 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"net"
+	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 )
 
 const (
@@ -29,7 +32,7 @@ func ConcatResume() []byte {
 	return output
 }
 
-func handle(conn net.Conn) {
+func handle(conn net.Conn, l zerolog.Logger) {
 	defer conn.Close()
 	reader := bufio.NewReader(conn)
 
@@ -43,6 +46,8 @@ func handle(conn net.Conn) {
 		}
 
 		input := strings.TrimSpace(line)
+
+		l.Info().Msg(input)
 
 		switch input {
 		case "1":
@@ -74,15 +79,27 @@ func handle(conn net.Conn) {
 }
 
 func main() {
-	ln, err := net.Listen("tcp", ":2001")
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+
+	logFile, err := os.OpenFile("server.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
-		panic(err)
+		log.Fatal().Err(err).Msg("failed to open log file")
 	}
 
-	log.Println("TCP server running on :2001")
+	log.Logger = zerolog.New(logFile).With().Timestamp().Logger()
+	log.Info().Msg("starting TCP server on :2001")
+
+	ln, err := net.Listen("tcp", ":2001")
+	if err != nil {
+		log.Fatal().Err(err).Msg("failed to listen on :20001")
+	}
+
+	log.Info().Msg("TCP server running on :2001")
 
 	for {
 		conn, _ := ln.Accept()
-		go handle(conn)
+		l := log.With().Str("remoteAddr", conn.RemoteAddr().String()).Logger()
+		l.Info().Msg("connection accepted")
+		go handle(conn, l)
 	}
 }
