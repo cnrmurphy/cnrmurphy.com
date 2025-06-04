@@ -25,7 +25,7 @@
 
 **Sporcle “US City Triplets” Solver** ~(Rust)
 
-<https://github.com/cnrmurphy/us-city-triplets-solver\[34mhttps://github.com/cnrmurphy/us-city-triplets-solver[0m]8;;\
+<https://github.com/cnrmurphy/us-city-triplets-solver>
 
 * A simple Rust program to help solve the Sporcle quiz “US City Triplets” utilizing web scraping to retrieve required inputs and file parsing/scanning to identify potential solutions based
   on those inputs
