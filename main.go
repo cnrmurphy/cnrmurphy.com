@@ -32,6 +32,53 @@ func ConcatResume() []byte {
 	return output
 }
 
+func MakeArticlesListMDFile() error {
+	entries, err := os.ReadDir("./pages/articles")
+	if err != nil {
+		return err
+	}
+
+	md := "# Articles\n"
+
+	for _, e := range entries {
+		log.Info().Msg(e.Name())
+		n := strings.Split(e.Name(), ".")
+		md += fmt.Sprintf("* %s\n", n[0])
+	}
+
+	mdFile, err := os.OpenFile("./pages/articles_list.md", os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		log.Fatal().Err(err).Msg("failed to open articles_list.md for writing")
+	}
+
+	mdFile.WriteString(md)
+
+	return nil
+}
+
+func HandleArticles(flags []string) []byte {
+	if len(flags) <= 0 {
+		return []byte("Please pass an article name to retrieve an article. For a list of articles pass the flag -l. For help, pass the flag -h.")
+	}
+
+	flag := flags[0]
+
+	if flag[0] == '-' {
+		switch flag {
+		case "-l":
+			cmd := exec.Command("mdcat", "./pages/articles_list.md")
+			output, _ := cmd.Output()
+			return output
+		default:
+			return []byte("command not recognized")
+		}
+	}
+
+	cmd := exec.Command("mdcat", "./pages/articles/"+flag+".md")
+	output, _ := cmd.Output()
+	return output
+}
+
 func handle(conn net.Conn, l zerolog.Logger) {
 	defer conn.Close()
 	reader := bufio.NewReader(conn)
@@ -46,14 +93,25 @@ func handle(conn net.Conn, l zerolog.Logger) {
 		}
 
 		input := strings.TrimSpace(line)
+		input = strings.ToLower(input)
+		parts := strings.Split(input, " ")
+
+		if len(parts) == 0 {
+			continue
+		}
+
+		command := parts[0]
 
 		l.Info().Msg(input)
 
-		switch input {
-		case "1":
+		switch command {
+		case "about":
 			cmd := exec.Command("mdcat", "./pages/about.md")
 			output, _ := cmd.Output()
 			conn.Write(output)
+		case "articles":
+			o := HandleArticles(parts[1:])
+			conn.Write(o)
 		case "contact":
 			cmd := exec.Command("mdcat", "./pages/contact.md")
 			output, _ := cmd.Output()
@@ -87,6 +145,9 @@ func main() {
 	}
 
 	log.Logger = zerolog.New(logFile).With().Timestamp().Logger()
+
+	MakeArticlesListMDFile()
+
 	log.Info().Msg("starting TCP server on :2001")
 
 	ln, err := net.Listen("tcp", ":2001")
