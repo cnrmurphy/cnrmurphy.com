@@ -1,4 +1,4 @@
-# Conor J Murphy
+# Conor Murphy
 
 _Software Engineer
 
