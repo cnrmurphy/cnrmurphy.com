@@ -43,7 +43,7 @@ func MakeArticlesListMDFile() error {
 	for _, e := range entries {
 		log.Info().Msg(e.Name())
 		n := strings.Split(e.Name(), ".")
-		md += fmt.Sprintf("* %s\n", n[0])
+		md += fmt.Sprintf("* [%s](/articles/%s)\n", n[0], n[0])
 	}
 
 	mdFile, err := os.OpenFile("./pages/articles_list.md", os.O_CREATE|os.O_WRONLY, 0666)
@@ -83,7 +83,9 @@ func handle(conn net.Conn, l zerolog.Logger) {
 	defer conn.Close()
 	reader := bufio.NewReader(conn)
 
-	conn.Write([]byte(Bold("Welcome to Conor Murphy's server!\n\n")))
+	cmd := exec.Command("cat", "./pages/banner.md")
+	output, _ := cmd.Output()
+	conn.Write(output)
 
 	for {
 		conn.Write([]byte(Bold("→ ")))
@@ -147,6 +149,9 @@ func main() {
 	log.Logger = zerolog.New(logFile).With().Timestamp().Logger()
 
 	MakeArticlesListMDFile()
+
+	hs := NewHTTPServer()
+	go hs.Start()
 
 	log.Info().Msg("starting TCP server on :2001")
 
