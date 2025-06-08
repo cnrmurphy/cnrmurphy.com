@@ -58,7 +58,7 @@ func MakeArticlesListMDFile() error {
 
 func HandleArticles(flags []string) []byte {
 	if len(flags) <= 0 {
-		return []byte("Please pass an article name to retrieve an article. For a list of articles pass the flag -l. For help, pass the flag -h.")
+		return []byte("Please pass an article name to retrieve an article. For a list of articles pass the flag -l. For help, pass the flag -h.\n")
 	}
 
 	flag := flags[0]
