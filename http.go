@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"os/exec"
+	"strings"
 	"text/template"
 
 	"github.com/rs/zerolog"
@@ -21,6 +23,7 @@ func (s *HTTPServer) Start() {
 	http.HandleFunc("/about", AboutHandler)
 	http.HandleFunc("/resume", ResumeHandler)
 	http.HandleFunc("/articles", ArticlesHandler)
+	http.HandleFunc("/articles/", ArticlesHandler)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -69,14 +72,32 @@ func ResumeHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func ArticlesHandler(w http.ResponseWriter, req *http.Request) {
-	cmd := exec.Command("pandoc", "./pages/articles_list.md", "-f", "markdown", "-t", "html")
-	output, _ := cmd.Output()
+	path := req.URL.Path
+	p := &Page{
+		Title: "Articles",
+	}
 	t, _ := template.ParseFiles("./wrapper.html")
 
-	p := &Page{
-		Title:   "Articles",
-		Content: output,
+	fmt.Println(path)
+
+	if path == "/articles" {
+		cmd := exec.Command("pandoc", "./pages/articles_list.md", "-f", "markdown", "-t", "html")
+		output, _ := cmd.Output()
+		p.Content = output
+		t.Execute(w, p)
+		return
 	}
 
-	t.Execute(w, p)
+	if strings.HasPrefix(path, "/articles/") {
+		articleName := strings.TrimPrefix(path, "/articles/")
+		fmt.Println(articleName)
+
+		cmd := exec.Command("pandoc", "./pages/articles/"+articleName+".md", "-f", "markdown", "-t", "html")
+		output, _ := cmd.Output()
+		p.Title = articleName
+		p.Content = output
+		t.Execute(w, p)
+		return
+	}
+	http.NotFound(w, req)
 }
