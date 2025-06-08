@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"os/exec"
 	"strings"
@@ -78,8 +77,6 @@ func ArticlesHandler(w http.ResponseWriter, req *http.Request) {
 	}
 	t, _ := template.ParseFiles("./wrapper.html")
 
-	fmt.Println(path)
-
 	if path == "/articles" {
 		cmd := exec.Command("pandoc", "./pages/articles_list.md", "-f", "markdown", "-t", "html")
 		output, _ := cmd.Output()
@@ -90,7 +87,6 @@ func ArticlesHandler(w http.ResponseWriter, req *http.Request) {
 
 	if strings.HasPrefix(path, "/articles/") {
 		articleName := strings.TrimPrefix(path, "/articles/")
-		fmt.Println(articleName)
 
 		cmd := exec.Command("pandoc", "./pages/articles/"+articleName+".md", "-f", "markdown", "-t", "html")
 		output, _ := cmd.Output()
