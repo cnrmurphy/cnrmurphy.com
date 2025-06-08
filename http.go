@@ -19,10 +19,10 @@ func NewHTTPServer() *HTTPServer {
 
 func (s *HTTPServer) Start() {
 	http.HandleFunc("/", HomeHandler)
-	http.HandleFunc("/about", AboutHandler)
 	http.HandleFunc("/resume", ResumeHandler)
 	http.HandleFunc("/articles", ArticlesHandler)
 	http.HandleFunc("/articles/", ArticlesHandler)
+	http.HandleFunc("/contact", ContactHandler)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -32,25 +32,25 @@ type Page struct {
 }
 
 func HomeHandler(w http.ResponseWriter, req *http.Request) {
-	cmd := exec.Command("pandoc", "./pages/contact.md", "-f", "markdown", "-t", "html")
+	cmd := exec.Command("pandoc", "./pages/about.md", "-f", "markdown", "-t", "html")
 	output, _ := cmd.Output()
 	t, _ := template.ParseFiles("./wrapper.html")
 
 	p := &Page{
-		Title:   "Home",
+		Title:   "Conor Murphy",
 		Content: output,
 	}
 
 	t.Execute(w, p)
 }
 
-func AboutHandler(w http.ResponseWriter, req *http.Request) {
-	cmd := exec.Command("pandoc", "./pages/about.md", "-f", "markdown", "-t", "html")
+func ContactHandler(w http.ResponseWriter, req *http.Request) {
+	cmd := exec.Command("pandoc", "./pages/contact.md", "-f", "markdown", "-t", "html")
 	output, _ := cmd.Output()
 	t, _ := template.ParseFiles("./wrapper.html")
 
 	p := &Page{
-		Title:   "About",
+		Title:   "Conor Murphy",
 		Content: output,
 	}
 
