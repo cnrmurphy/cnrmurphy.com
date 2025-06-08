@@ -153,14 +153,14 @@ func main() {
 	hs := NewHTTPServer()
 	go hs.Start()
 
-	log.Info().Msg("starting TCP server on :2001")
+	log.Info().Msg("starting TCP server on :2003")
 
-	ln, err := net.Listen("tcp", ":2001")
+	ln, err := net.Listen("tcp", ":2003")
 	if err != nil {
-		log.Fatal().Err(err).Msg("failed to listen on :2001")
+		log.Fatal().Err(err).Msg("failed to listen on :2003")
 	}
 
-	log.Info().Msg("TCP server running on :2001")
+	log.Info().Msg("TCP server running on :2003")
 
 	for {
 		conn, _ := ln.Accept()
