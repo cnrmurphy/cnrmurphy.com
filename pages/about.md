@@ -1,6 +1,6 @@
-# About
+# Conor Murphy
 
-Hi, I'm Conor. I'm a software engineer who cares deeply about building simple, efficient systems.
+I'm a software engineer who cares deeply about building simple, efficient systems.
 I enjoy working across the stack, but my strengths lean toward backend infrastructure, distributed systems, and developer tooling.
 My approach emphasizes clarity, minimalism, and long-term maintainability — both in code and in design.
 
