@@ -1,8 +1,11 @@
 APP_NAME = cnrmurphy.com
-SRC_DIR = .
+SRC_DIR = /.
 BIN_PATH = /usr/local/bin/$(APP_NAME)
 
 .PHONY: build install relabel deploy clean restart
+
+generate:
+	./build_html.sh
 
 build:
 	@echo "building binary..."
