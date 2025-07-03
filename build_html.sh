@@ -19,10 +19,10 @@ generate_complete_page() {
     # Use a more robust approach with awk to handle multiline content
     awk -v title="$title" -v content_file="$temp_content" '
     {
-        if ($0 ~ /{{\.Title}}/) {
-            gsub(/{{\.Title}}/, title)
+        if ($0 ~ /<!-- TITLE -->/) {
+            gsub(/<!-- TITLE -->/, title)
         }
-        if ($0 ~ /{{printf "%s" \.Content}}/) {
+        if ($0 ~ /<!-- CONTENT -->/) {
             while ((getline line < content_file) > 0) {
                 print line
             }
