@@ -1,0 +1,313 @@
+<HTML>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+      <title>building_website_unix_way</title>
+  <style>
+    html {
+      color: #d8dee9;
+      background-color: #2e3440;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #88c0d0;
+    }
+    a:visited {
+      color: #81a1c1;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #5e81ac;
+      color: #e5e9f0;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #4c566a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #4c566a;
+      border-bottom: 1px solid #4c566a;
+    }
+    th {
+      border-top: 1px solid #4c566a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+      <nav>
+        <ul style="list-style: none; display: flex; gap: 1rem; padding: 0;">
+          <li><a href="/">Home</a></li>
+          <li><a href="/articles">Articles</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/resume">Resume</a></li>
+        </ul>
+      </nav>
+<h1 id="building-my-personal-website-the-unix-way">Building My Personal
+Website — The Unix Way</h1>
+<hr />
+<p><strong>June 2025</strong></p>
+<p>Recently I decided it was about time to stand up a peronal website. I
+wanted a digital waystone of sorts to host things like personal
+services, articles, my resume, etc. The first question I asked myself
+was: <strong>What’s the simplest and most enjoyable way I could build
+this?</strong> The second question I asked myself was: <strong>How can I
+make it fun?</strong></p>
+<p>There are a multitude of solutions for build a website these days. I
+could have used a popular and familiar framework like React. But, that
+would certainly be overkill. And not fun! I could use one of the many
+static site generators that exist. I a few are Hugo, Jekyll, and Gatsby.
+They also take advantage of Markdown documents as a medium for writing
+pages. I enjoy working with Markdown so I would define that as fun.
+Furthermore, this is how I intended to work with my own personal website
+- I didn’t want to deal too much with actually writing out HTML or
+crafting my own content manager. Markdown already exists, is familiar,
+easy to work with, and well formatted. A suitable solution indeed. But,
+I just want to get something up quick and not deal with learning one of
+these many static site generators. At the moment, I am not interested in
+the flare they offer in the form of templates and such.</p>
+<p>Surely I should just be able to easily convert Markdown to HTML and
+throw something up quick. With a little research, I found a way forward
+here. I could use a neat program called <code>Pandoc</code> that allows
+me to do just that! It also allows you to convert from MD to quite a few
+other formats as well. While I don’t have an immediate use for this, it
+is a piece of knowledge I’m happy I now have.</p>
+<h2 id="my-goals">My Goals</h2>
+<ul>
+<li>Minimal dependencies<br />
+</li>
+<li>Simple, transparent structure<br />
+</li>
+<li>Avoid HTML and JS as much as possible<br />
+</li>
+<li>Use Markdown as the source of truth<br />
+</li>
+<li>Reusable content across browser and terminal<br />
+</li>
+<li>Make it fun</li>
+</ul>
+<h2 id="the-stack">The Stack</h2>
+<p>Here’s what I used:</p>
+<ul>
+<li><strong>Go</strong> – for serving HTTP and TCP requests<br />
+</li>
+<li><strong>Makefile</strong> – for basic automation<br />
+</li>
+<li><strong>Markdown</strong> – for writing all content<br />
+</li>
+<li><strong>Pandoc</strong> – for converting Markdown to HTML<br />
+</li>
+<li><strong>Mdcat</strong> – for pretty-printing Markdown in the
+terminal</li>
+</ul>
+<p>That’s it.</p>
+<h2 id="serving-markdown-over-http">Serving Markdown over HTTP</h2>
+<p>The basic idea is this: all my articles, resume sections, and content
+are written in Markdown. I use <code>pandoc</code> to convert them to
+HTML. Then I serve them using a minimal Go HTTP server.</p>
+<p>There’s no JS framework, no build pipeline, or other bloat - just raw
+HTML rendered from Markdown. Pages load fast, the codebase is small, and
+it is a system tailored to my needs.</p>
+<p>This makes the whole site easy to manage. If I want to write
+something new, I create a <code>.md</code> file. If I want to publish, I
+run <code>make</code>.</p>
+<h2 id="and-also-over-tcp">…and Also Over TCP</h2>
+<p>But I didn’t stop there.</p>
+<p>I’ve been simplifying my digital life — using RSS again, spending
+less time on noisy platforms, and leaning back into the terminal. It
+made me nostalgic for when I’d <code>telnet sdf.lonestar.org</code> from
+a Windows command prompt and get dropped into a shared Unix system. That
+kind of interaction had a charm — minimal, efficient, and personal.</p>
+<p>So I thought:<br />
+<strong>What if you could browse my website entirely from the
+terminal?</strong></p>
+<p>No web browser. Just a TCP connection and a few commands. Like:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&quot;resume\nbye\n&quot;</span> <span class="kw">|</span> <span class="ex">nc</span> cnrmurphy.com 2003</span></code></pre></div>
+<p>This command connects to my TCP server, prints out my resume in your
+terminal (nicely formatted with <code>mdcat</code>), and
+disconnects.</p>
+<p>You can even save it:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&quot;resume\nbye\n&quot;</span> <span class="kw">|</span> <span class="ex">nc</span> cnrmurphy.com 2003 <span class="kw">|</span> <span class="fu">tee</span> cnr_resume.txt</span></code></pre></div>
+<p>The resume is just Markdown rendered cleanly for the terminal — no
+CSS, no dependencies. Just text, styled using conventions that have
+worked for decades.</p>
+<h2 id="reusing-the-markdown">Reusing the Markdown</h2>
+<p>Because the Markdown files are the source of truth, I reuse them for
+both the web and TCP interface. For example, my resume is split into
+sections:</p>
+<pre><code>resume/
+├── contact.md
+├── experience.md
+├── projects.md
+└── education.md</code></pre>
+<p>Over HTTP, I use <code>pandoc</code> to render each section as a full
+HTML page. Over TCP, I use <code>mdcat</code> to pretty-print them in
+sequence, separated by horizontal rules. Bash handles the composition,
+and Go handles the TCP interactions.</p>
+<p>The file structure looks like this:</p>
+<pre><code>cnrmurphy.com/
+├── pages/
+│   ├── resume/
+│   │   ├── contact.md
+│   │   ├── experience.md
+│   │   ├── projects.md
+│   │   └── education.md
+│   ├── articles/
+│   │   └── building_website_unix_way.md
+│   └── about.md
+├── tcp.go
+├── http.go
+├── main.go
+├── Makefile
+└── go.mod</code></pre>
+<p>Each TCP command corresponds to a Markdown file. Want to read just
+the <code>projects</code> section? Type <code>projects</code>. Want the
+full resume? Type <code>resume</code>.</p>
+<p>You can even grab this very article the same way:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&quot;articles resume_over_tcp\nbye\n&quot;</span> <span class="kw">|</span> <span class="ex">nc</span> cnrmurphy.com 2003 <span class="kw">|</span> <span class="fu">tee</span> resume_over_tcp.txt</span></code></pre></div>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>I didn’t want to build <em>just</em> another personal site. I wanted
+to build something I’d enjoy maintaining — something that reflected the
+way I think about software, the web, and computing in general.</p>
+<p>This approach isn’t for everyone. But it’s fast, clean, and deeply
+satisfying. And to me, that’s the point.</p>
+</body>
+</html>
