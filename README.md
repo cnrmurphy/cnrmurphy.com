@@ -7,30 +7,65 @@ Each page of my website is written in Markdown and served over both **TCP** and 
 - The **HTTP** version is a traditional browser-based interface.
 - The **TCP** server allows you to browse my site directly from the terminal.
 
-Markdown files are modular — for example, each section of my resume lives in its own file. This allows terminal users to run commands like `contact` or `experience` to read individual sections.
+I used `Pandoc` to generate a simple HTML wrapper and then use it to convert all of the Markdown pages into HTML files. A simple shell script uses `awk` to
+to do template substitution. Areas to be subsituted are marked with HTML comments. This also means we can resuse our pages for the TCP server. But, in the case
+of TCP, we use `mdcat` to create a pretty printed version of the page that is terminal friendly.
 
-To view the full resume, I simply concatenate the files using `cat`. The same modular approach is used to generate the HTML version, making the system **clean, reusable, and format-agnostic**.
+Finally, we use `Make` to tie everything together - compiling our files, distributing static files, running our dev server, and deploying to production.
+
+## Development
+
+To run the site locally for development:
+
+```bash
+# Generate HTML files from Markdown
+make generate
+
+# Start both HTTP (port 8080) and TCP (port 2003) servers
+make dev
+```
+
+Visit `http://localhost:8080` for the web interface or connect to the TCP server:
+```bash
+nc localhost 2003
+```
+
+## Production Deployment
+
+For production deployment using nginx and systemd:
+
+```bash
+# Pull latest changes
+git pull
+
+# Deploy everything: build binary, generate HTML, configure nginx, restart services
+make deploy
+```
+
+This will:
+- Generate HTML files from Markdown sources
+- Build and install the Go binary for the TCP server
+- Install nginx configuration for HTTP serving
+- Restart both the TCP server (systemd) and nginx
 
 ## Why...
 **Markdown?**
 
-Markdown is simple, clean, and portable. It’s easy to maintain, displays well across formats, and can be converted into HTML, plain text, or even PDF with existing tools.
+I like markdown. It's simple and I can edit it in vim. It converts to HTML easily and I don't need to think about styling while writing.
 
 **Not use a static site generator?**
 
-There are plenty of static site generators out there, but I’m not interested in adding unnecessary tooling. I don't want to deal with JavaScript, theming systems, or learning another templating language.
-
-I wanted to use tools I already enjoy — minimal dependencies, minimal complexity, and something that feels fun and natural to me.
+I am not familiar with these and don't feel like taking the time to learn them. This approach for me works as it uses tools I am familiar with and is intuitive. I believe
+there is a lot of crossover with how those frameworks work, but this way I avoid dependencies that I don't want and have a more controlled approach.
 
 **TCP?**
 
-These days, I'm feeling increasingly overwhelmed by the modern web: too much noise, too little control. I'm trying to reclaim simplicity — using tools like RSS, spending more time in the terminal, and avoiding algorithm-driven feeds.
+This is a bit of an ode to my first experiences of using the internet as a young lad. I'm fond of the times when I was beginning to learn program and chat with folks on `sdf.lonestar.org`.
 
-It reminds me of when I first started using the internet as a kid back in the early 2000's.
-Before even using IRC, I thought it was amazing to be able to `telnet sdf.lonestar.org`, create an account, and chat with tech-minded folks all from within the terminal.
 
-So I thought it would be fun to provide an alternative way for people to access my website by creating a browsing experience within the terminal.
+These days, I'm feeling increasingly overwhelmed by the modern web. Ads everywhere, noisy social media networks, bloated websites. I find myself moving away from these things
+and becoming ever reliant on my terminal; A sort of bunker if you will. So I thought it woud be neat if I could essentially host my website through TCP. I also like the idea
+of someone being able to grab my resume from their terminal with some simple unix commands:
 
-As a bonus, I can share my resume in a way that’s a little odd, but hopefully memorable:
-`printf "resume\nbye\n" | nc cnrmurphy.com 2001 > resume.txt`
+`printf "resume\nbye\n" | nc cnrmurphy.com 2001 | tee conor_murphy_resume.txt`
 
