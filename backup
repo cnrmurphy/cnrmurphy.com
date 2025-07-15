@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    echo "Usage: backup <filename>"
+    exit 1
+fi
+
+file="$1"
+
+if [ ! -f "$file" ]; then
+    echo "Error: File '$file' does not exist"
+    exit 1
+fi
+
+mkdir -p bck
+
+filename=$(basename "$file")
+extension="${filename##*.}"
+name="${filename%.*}"
+
+date=$(date +"%Y%m%d_%H%M%S")
+
+backup_name="${name}.${date}.${extension}.bck"
+
+cp "$file" "bck/$backup_name"
+
+echo "Backup created: bck/$backup_name"
