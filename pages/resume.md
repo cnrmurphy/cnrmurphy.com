@@ -66,6 +66,12 @@ _Software Engineer
 * Event-driven low-latency trading engine built with components like Order Manager and Execution Manager. Uses Go channels to implement Actor-like model to minimize contention. Includes
   custom REST/WebSocket clients, supports 80+ active orders and 8 concurrent markets, and features execution algorithms like TWAP.
 
+**Mail Server** ~(Rust)
+
+<https://github.com/cnrmurphy/pop3-rs>
+
+* A mail server fully compliant with the POP3 protocol. It uses MailDir as the underlying storage layout, Sled to store users, and Argon2 to secure passwords.
+
 **B+ Tree** ~(Node.js)
 
 <https://github.com/cnrmurphy/B-Plus-Tree>
