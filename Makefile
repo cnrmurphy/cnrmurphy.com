@@ -1,6 +1,7 @@
 APP_NAME = cnrmurphy.com
 SRC_DIR = /.
 BIN_PATH = /usr/local/bin/$(APP_NAME)
+WWW = /www/$(APP_NAME)
 NGINX_CONFIG_PATH = /etc/nginx/sites-available/$(APP_NAME)
 NGINX_ENABLED_PATH = /etc/nginx/sites-enabled/$(APP_NAME)
 
@@ -22,6 +23,12 @@ install: build
 	@echo "installing binary to $(BIN_PATH)..."
 	sudo mv $(APP_NAME) $(BIN_PATH)
 	sudo chmod +x $(BIN_PATH)
+
+build-dist:
+	@echo "building html files"
+	./build_html.sh
+	@echo "moving public files to www"
+	sudo cp -r ./public.* $(WWW)
 
 nginx-install:
 	@echo "installing nginx configuration..."
