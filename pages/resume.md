@@ -11,20 +11,19 @@ _Software Engineer
 # Professional Experience
 **SPINS**
 
-*Software Enginer*
+*Software Engineer*
 
 ~03/2022 – 06/2024
 
-* Led efforts to reduce data transfer costs by optimizing MongoDB queries contributing in the reduction of our Mongo Atlas bill
+* Diagnosed and resolved MongoDB performance issues including over-fetching (1M+ unnecessary documents), N+1 query patterns, and excessive frontend API calls, significantly reducing data transfer costs and eliminating production timeouts; coincided with ~30% infrastructure cost reduction
 * Improved system performance by refactoring schema anti-patterns and enforcing MongoDB best practices
 * Enhanced observability across microservices by implementing OpenTelemetry, enabling real-time latency monitoring and correlated logging
-* Maintained and contributed to Builder, a proprietary DSL compiler targeting JavaScript
-* Led and participated in thoughtful code reviews, regularly identifying bugs and improvements, helping establish a culture of high code quality, and unblocking developers during critical
-  delivery periods
-* Supported product integration efforts post-acquisition by onboarding Pinto's Product Intelligence team
-* Developed and maintained APIs in a microservices environment, working across multiple teams to integrate product analytics into SPINS' broader platform
-* Deployed, monitored, and maintained production services in Google Cloud Platform (GCP), including services that integrated with AWS S3 and other cloud dependencies
-* Developed and maintained front-end features in our admin and operations tools using React and Mobx for state management
+* Maintained and debugged Builder, a proprietary DSL compiler critical to data accuracy, enabling nutrition experts to author 1,000+ data transformation formulas compiled to JavaScript at runtime; improved developer experience by fixing error propagation and supporting hot-reloading for production systems processing 1M+ products
+* Conducted comprehensive code reviews for 9-person engineering team, identifying MongoDB anti-patterns, data over-fetching issues, and performance bottlenecks; frequently served as primary reviewer during high-velocity delivery periods, ensuring architectural best practices and preventing production performance issues
+* Facilitated post-acquisition integration of 7-person Product Intelligence team by developing automated documentation system (Mongoose schemas to Markdown with cross-references), establishing development environments, and providing ongoing architectural guidance for feature implementation
+* Developed full-stack image processing pipeline managing 100K+ images with priority queuing for batches up to 10K images; implemented S3 streaming, automated zip/folder organization, and identified race conditions, implementing MongoDB document locking to prevent concurrent modification during downloads
+* Built self-service script execution platform enabling operations team to run data processing and maintenance scripts via web interface with real-time logging; implemented local development environment with temporary BigQuery tables, eliminating UAT deployment requirements for testing
+* Deployed and maintained production services on GCP (Cloud Run, Cloud Functions, BigQuery) using Terraform and Concourse; developed React/MobX admin tools and managed AWS S3 integrations for data storage
 
 **Pinto** ~(Acquired by SPINS)
 
@@ -32,10 +31,9 @@ _Software Engineer
 
 ~07/2021 – 03/2022
 
-* Developed and maintained MongoDB schemas and GraphQL APIs using Node.js and TypeScript
 * Proposed and built a static analysis tool to transpile Mongoose schemas into Markdown documents for automatic domain documentation
-* Collaborated cross-functionally with the CTO, operations, and data teams to support analytics tools
-* Wrote and maintained documentation
+* Developed real-time retailer data quality scoring system serving 100+ retailers; implemented middleware with tree traversal algorithms to merge grading feedback into retailer documents upon product data updates
+* Built APIs and provided technical support for data engineering workflows; wrote documentation and conducted code reviews for Python-based data collection scripts, and developed ad-hoc queries for operations team
 
 **Wakefern Food Corporation**
 
@@ -43,28 +41,26 @@ _Software Engineer
 
 ~05/2017 – 07/2021
 
-* Rotated across Mobile, Business Intelligence, and Finance teams contributing to full-stack and infrastructure projects
-* Built and deployed a message broker using Go, gRPC, and Beanstalkd for service-to-service communication
-* Designed and implemented a proprietary project management app (PostgreSQL, Express, React, Redux)
+* Built and deployed message broker processing transaction data from 100+ stores using Go, gRPC, and Beanstalkd; parsed and transformed XML transaction data to DB2 for customer shopping trend analysis
+* Built full-stack project management system serving 6 project managers and 100+ department staff; implemented JIRA proxy with Vue.js frontend and PostgreSQL backend to enforce PM-only project state controls and provide executive-level reporting with data rollups for department director
 * Created an ETL pipeline in Python to ingest and clean IBM Weather API data
-* Developed a Jira-integrated reporting dashboard (Node.js, Vue.js, CouchDB) for internal stakeholders
-* Authored a lightweight JavaScript SPA framework to streamline internal front-end development
-* Developed and maintained existing features for the Shoprite mobile app
+* Developed custom JavaScript SPA framework with routing, state management, and component system using regex-based template parsing; implemented custom directive syntax ($$for loops, dynamic replacements) for internal applications in restricted open-source environment
+* Implemented shop-from-home feature across 100+ Shoprite stores using geofencing technology; developed cross-platform location detection with unified iOS/Android permission handling and state management for automatic store notification upon customer arrival
 
 - - -
 
 # Personal Projects
+
+**Algorithmic Trading System** ~(Go, Python, MongoDB)
+
+* Event-driven low-latency trading engine built with components like Order Manager and Execution Manager. Uses Go channels to implement Actor-like model to minimize contention. Includes
+  custom REST/WebSocket clients, supports 80+ active orders and 8 concurrent markets, and features execution algorithms like TWAP.
 
 **VoilaDB** ~(Go)
 
 <https://github.com/cnrmurphy/voila>
 
 * A key-value store using fixed-page layout and offset-based navigation for performance and simplicity.
-
-**Algorithmic Trading System** ~(Go, Python, MongoDB)
-
-* Event-driven low-latency trading engine built with components like Order Manager and Execution Manager. Uses Go channels to implement Actor-like model to minimize contention. Includes
-  custom REST/WebSocket clients, supports 80+ active orders and 8 concurrent markets, and features execution algorithms like TWAP.
 
 **Mail Server** ~(Rust)
 
@@ -86,7 +82,7 @@ _Software Engineer
 
 **Sporcle “US City Triplets” Solver** ~(Rust)
 
-<https://github.com/cnrmurphy/us-city-triplets-solver\[34mhttps://github.com/cnrmurphy/us-city-triplets-solver[0m]8;;\
+<https://github.com/cnrmurphy/us-city-triplets-solver>
 
 * A simple Rust program to help solve the Sporcle quiz “US City Triplets” utilizing web scraping to retrieve required inputs and file parsing/scanning to identify potential solutions based
   on those inputs
